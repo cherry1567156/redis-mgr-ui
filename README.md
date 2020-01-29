@@ -5,7 +5,7 @@
 
 #### 软件架构
  **后端** 
-1. springboot 2.2.2.RELEASE
+1. springboot 2.2.2.RELEASE  :leaves: 
 2. JDK 1.8
 3. jedis 3.2.0
 4. commons-lang3 3.5
@@ -19,7 +19,7 @@
 3. element-ui 2.13.0 [观望饿了吗](https://element.eleme.cn/) :sunglasses: 
 4. font-awesome 4.7.0
 5. nprogress 0.2.0
-6. vue 2.2.2 [观望VUE](https://cn.vuejs.org/v2/api/)
+6. vue 2.2.2 [观望VUE](https://cn.vuejs.org/v2/api/) :leaves: 
 7. vue-router 2.3.0
 8. vuex 2.0.0-rc.6
 
