@@ -16,10 +16,10 @@
  **前端** 
 1. vue-admin 1.0.5 参考作者`taylorchen709`的案例，项目地址：[vue-admin](https://github.com/taylorchen709/vue-admin)
 2. axios 0.15.3
-3. element-ui 2.13.0
+3. element-ui 2.13.0 [观望饿了吗](https://element.eleme.cn/) :sunglasses: 
 4. font-awesome 4.7.0
 5. nprogress 0.2.0
-6. vue 2.2.2
+6. vue 2.2.2 [观望VUE](https://cn.vuejs.org/v2/api/)
 7. vue-router 2.3.0
 8. vuex 2.0.0-rc.6
 
