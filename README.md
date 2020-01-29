@@ -17,8 +17,8 @@
 
 1.  安装JDK1.8以上(Java同学已安装的请忽略) 
 友情推荐安装JDK教程：[https://jingyan.baidu.com/article/c74d60003588974f6a595db6.html](http://)
-2.  打开./bin/目录 执行启动服务脚本 startup.bat 或 startup.sh
-3.  打开./bin/目录 执行停止服务脚本 shutdown.bat 或 shutdown.sh
+2.  打开`./bin/`目录 执行启动服务脚本 `startup.bat` 或 `startup.sh`
+3.  打开`./bin/`目录 执行停止服务脚本 `shutdown.bat` 或 `shutdown.sh`
 
 #### 使用说明
 
