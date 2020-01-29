@@ -14,9 +14,14 @@
 
 
  **前端** 
-1. 这里是列表文本
-1. 这里是列表文本
-1. 这里是列表文本
+1. vue-admin 1.0.5 参考作者`taylorchen709`的案例，项目地址：[vue-admin](https://github.com/taylorchen709/vue-admin)
+2. axios 0.15.3
+3. element-ui 2.13.0
+4. font-awesome 4.7.0
+5. nprogress 0.2.0
+6. vue 2.2.2
+7. vue-router 2.3.0
+8. vuex 2.0.0-rc.6
 
 
 #### 安装教程
