@@ -3,7 +3,8 @@ package com.xianxin.redis.admin.framework.annotation;
 import java.lang.annotation.*;
 
 /**
- * @author 敖燕飞
+ * @author 贤心i
+ * @email 1138645967@qq.com
  * @date 2019/8/26 17:46
  **/
 @Target({ElementType.METHOD, ElementType.TYPE})

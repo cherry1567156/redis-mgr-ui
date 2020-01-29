@@ -6,7 +6,9 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * @author 敖燕飞
+ * @author 贤心i
+ * @email 1138645967@qq.com
+ * @date 2020/01/29
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

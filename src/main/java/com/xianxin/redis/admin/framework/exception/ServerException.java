@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 /**
  * 自定义服务异常
  *
- * @author 敖燕飞
+ * @author 贤心i
+ * @email 1138645967@qq.com
  * @date 2019/8/30 15:17
  **/
 public class ServerException extends RuntimeException {

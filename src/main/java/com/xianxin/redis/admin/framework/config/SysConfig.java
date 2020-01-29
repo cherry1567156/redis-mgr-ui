@@ -15,7 +15,9 @@ import java.util.*;
 
 
 /**
- * @author 敖燕飞
+ * @author 贤心i
+ * @email 1138645967@qq.com
+ * @date 2020/01/29
  */
 @Slf4j
 public class SysConfig {
@@ -53,6 +55,7 @@ public class SysConfig {
 //        }
         writerConfigJsonFile(redisInfo);
     }
+
     private static void writerConfigJsonFile(Map<String, RedisConfig> redisInfo) {
         if (redisInfo != null && redisInfo.size() > 0) {
             List<RedisConfig> redisConfigList = new ArrayList<>();
@@ -182,12 +185,12 @@ public class SysConfig {
     }
 
     public static void deleteRedisConfig(String host) {
-       boolean containsKey = redisInfo.containsKey(host);
-       if(containsKey){
-           redisInfo.remove(host);
-           writerConfigJsonFile(redisInfo);
-       }else{
-           throw new ServerException("配置不存在，删除失败");
-       }
+        boolean containsKey = redisInfo.containsKey(host);
+        if (containsKey) {
+            redisInfo.remove(host);
+            writerConfigJsonFile(redisInfo);
+        } else {
+            throw new ServerException("配置不存在，删除失败");
+        }
     }
 }

@@ -3,7 +3,9 @@ package com.xianxin.redis.admin.framework.common;
 import java.io.Serializable;
 
 /**
- * @author 敖燕飞
+ * @author 贤心i
+ * @email 1138645967@qq.com
+ * @date 2020/01/29
  **/
 public class Response<T> implements Serializable {
 

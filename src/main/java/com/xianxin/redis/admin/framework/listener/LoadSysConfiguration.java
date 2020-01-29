@@ -2,20 +2,18 @@ package com.xianxin.redis.admin.framework.listener;
 
 import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.core.io.file.FileReader;
-import com.alibaba.fastjson.JSON;
-import com.xianxin.redis.admin.bean.po.SysUser;
 import com.xianxin.redis.admin.framework.config.SysConfig;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.util.List;
 
 /**
- * @author 敖燕飞
+ * @author 贤心i
+ * @email 1138645967@qq.com
+ * @date 2020/01/29
  */
 @Slf4j
 @Component
