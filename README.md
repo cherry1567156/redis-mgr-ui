@@ -4,15 +4,21 @@
 轻量级Redis缓存图形化管理工具，包含redis的5种数据类型的CRUD操作
 
 #### 软件架构
-软件架构说明
+ **后端** 
+1、springboot
+2、jdk1.8
+3、jedis-3.2.0
+前端
+1、
 
 
 
 #### 安装教程
 
-1.  安装JDK1.8以上(Java同学已安装的请忽略) 友情推荐安装JDK教程：[https://jingyan.baidu.com/article/c74d60003588974f6a595db6.html](http://)
-2.  xxxx
-3.  xxxx
+1.  安装JDK1.8以上(Java同学已安装的请忽略) 
+友情推荐安装JDK教程：[https://jingyan.baidu.com/article/c74d60003588974f6a595db6.html](http://)
+2.  打开./bin/目录 执行启动服务脚本 startup.bat 或 startup.sh
+3.  打开./bin/目录 执行停止服务脚本 shutdown.bat 或 shutdown.sh
 
 #### 使用说明
 
