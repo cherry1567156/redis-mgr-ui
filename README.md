@@ -7,9 +7,10 @@
 软件架构说明
 
 
+
 #### 安装教程
 
-1.  xxxx
+1.  安装JDK1.8以上(Java同学已安装的请忽略) 友情推荐安装JDK教程：[https://jingyan.baidu.com/article/c74d60003588974f6a595db6.html](http://)
 2.  xxxx
 3.  xxxx
 
