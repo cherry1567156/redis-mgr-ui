@@ -5,11 +5,15 @@
 
 #### 软件架构
  **后端** 
-1、springboot
-2、jdk1.8
-3、jedis-3.2.0
-前端
-1、
+1. springboot 2.2.2.RELEASE
+2. JDK 1.8
+3. jedis 3.2.0
+4. commons-lang3 3.5
+5. hutool-core 5.1.1  友情链接：[Java工具集-糊涂官网](https://www.hutool.cn/)
+6. fastjson 1.2.62
+
+
+ **前端** 
 
 
 
