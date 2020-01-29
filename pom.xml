@@ -93,7 +93,7 @@
     </dependencies>
 
     <build>
-        <finalName>redis-admin</finalName>
+        <finalName>redis-admin-server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
