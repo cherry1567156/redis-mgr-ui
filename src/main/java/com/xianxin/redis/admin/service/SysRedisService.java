@@ -50,4 +50,5 @@ public interface SysRedisService {
     Response cacheExpireUpdate(CacheRedisVo vo);
 
     Response delete(String host);
+
 }

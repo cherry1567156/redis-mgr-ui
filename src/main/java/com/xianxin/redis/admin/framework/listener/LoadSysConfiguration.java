@@ -27,7 +27,7 @@ public class LoadSysConfiguration implements ApplicationListener<ContextRefreshe
         // 读取系统用户
         String userJson = "";
         try {
-            File userFile = new File("./conf/user.json");
+            File userFile = new File("../conf/user.json");
             FileReader userFileReader = new FileReader(userFile);
             userJson = userFileReader.readString();
             log.info("user.json：{}", userJson);
@@ -40,7 +40,7 @@ public class LoadSysConfiguration implements ApplicationListener<ContextRefreshe
         // 读取系统redis配置
         String configJson = "";
         try {
-            File configFile = new File("./conf/config.json");
+            File configFile = new File("../conf/config.json");
             FileReader configFileReader = new FileReader(configFile);
             configJson = configFileReader.readString();
             log.info("config.json：{}", configJson);

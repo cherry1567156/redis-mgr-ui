@@ -23,7 +23,9 @@ import redis.clients.jedis.ScanResult;
 import java.util.*;
 
 /**
- * @author 敖燕飞
+ * @author 贤心i
+ * @email 1138645967@qq.com
+ * @date 2020/01/30
  */
 @Service
 @Slf4j
@@ -32,9 +34,9 @@ public class SysRedisServiceImpl implements SysRedisService {
     @Override
     public boolean saveOrUpdate(RedisConfig po, boolean conn) {
         // 尝试连接redis
-        if (conn) {
-            SysConfig.testConnection(po);
-        }
+//        if (conn) {
+//            SysConfig.testConnection(po);
+//        }
         SysConfig.saveOrUpdateRedisConfig(po);
         return true;
     }

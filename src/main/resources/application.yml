@@ -1,13 +1,19 @@
 server:
   port: 8081
 
+# 日志打印位置
+
 # 系统默认用户信息
-user:
-  username: admin
-  password: admin
-  avatar: http://q1.qlogo.cn/g?b=qq&nk=1138645967&s=100
-  nickname: 贤心i
-  sex: 1
-  age:
-  addr: 上海市静安区灵石路656号
-  birth:
+#user:
+#  username: admin
+#  password: admin
+#  avatar: http://q1.qlogo.cn/g?b=qq&nk=1138645967&s=100
+#  nickname: 贤心i
+#  sex: 1
+#  age:
+#  addr: 上海市静安区灵石路656号
+#  birth:
+logging:
+  file:
+    path: /Users/xianxin/Desktop/projects/redis-admin/logs/
+    name: redis-admin.log

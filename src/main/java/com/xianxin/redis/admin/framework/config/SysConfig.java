@@ -69,7 +69,7 @@ public class SysConfig {
     }
 
     private static void writerConfigJsonFile(List<RedisConfig> redisConfigList) {
-        File userFile = new File("./conf/config.json");
+        File userFile = new File("../conf/config.json");
         FileWriter writer = new FileWriter(userFile);
         String userJson = JSON.toJSONString(redisConfigList);
         writer.write(userJson);
@@ -116,7 +116,7 @@ public class SysConfig {
 
         save(user);
         // 写入user.json 文件
-        File userFile = new File("./conf/user.json");
+        File userFile = new File("../conf/user.json");
         FileWriter writer = new FileWriter(userFile);
         List<SysUser> userList = Arrays.asList(user);
         String userJson = JSON.toJSONString(userList);
@@ -150,7 +150,7 @@ public class SysConfig {
 
         saveOrUpdateRedisConfig(config);
         // 写入user.json 文件
-        File configFile = new File("./conf/config.json");
+        File configFile = new File("../conf/config.json");
         FileWriter writer = new FileWriter(configFile);
         List<RedisConfig> redisConfigList = Arrays.asList(config);
         String userJson = JSON.toJSONString(redisConfigList);
