@@ -1,14 +1,6 @@
 [
   {
     "env": "local",
-    "host": "47.92.217.237",
-    "name": "本地redis",
-    "password": "yunfei@2019",
-    "port": 6379,
-    "status": true
-  },
-  {
-    "env": "local",
     "host": "127.0.0.1",
     "name": "本地redis",
     "password": "",
