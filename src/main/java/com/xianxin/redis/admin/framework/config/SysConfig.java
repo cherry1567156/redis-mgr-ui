@@ -160,7 +160,11 @@ public class SysConfig {
     public static void testConnection(RedisConfig po) {
         try {
             JedisShardInfo shardInfo = new JedisShardInfo("redis://" + po.getHost() + ":" + po.getPort() + "/0");
-            shardInfo.setPassword(po.getPassword());
+            if(StringUtils.isNotBlank(po.getPassword())){
+                shardInfo.setPassword(po.getPassword());
+            }else {
+                shardInfo.setPassword(null);
+            }
             Jedis jedis = new Jedis(shardInfo);
             jedis.hset("test_connection", po.getHost(), "success");
             jedis.close();

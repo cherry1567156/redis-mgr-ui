@@ -61,6 +61,9 @@ public class ExceptionHandlerAdvice {
             if (e.getMessage().equalsIgnoreCase("value sent to redis cannot be null")) {
                 return Response.error("Redis存储失败,值不能为空");
             }
+            if(e.getMessage().equalsIgnoreCase("NOAUTH Authentication required.")){
+                return Response.error("需要密码认证");
+            }
             return Response.error("无效的密码");
         }
 //        if (e instanceof CommunicationsException) {
