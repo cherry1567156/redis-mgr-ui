@@ -176,11 +176,15 @@ public class SysConfig {
     public static Jedis getJedis(String host, String db) {
         try {
             RedisConfig redisConfig = SysConfig.findRedisConfigByUsername(host);
-            if (redisConfig == null) {
+//            if (redisConfig == null) {
 //            return Response.error("配置信息不存在");
-            }
+//            }
             JedisShardInfo shardInfo = new JedisShardInfo("redis://" + redisConfig.getHost() + ":" + redisConfig.getPort() + "/" + db);
-            shardInfo.setPassword(redisConfig.getPassword());
+            if(StringUtils.isNotBlank(redisConfig.getPassword())){
+                shardInfo.setPassword(redisConfig.getPassword());
+            }else {
+                shardInfo.setPassword(null);
+            }
             Jedis jedis = new Jedis(shardInfo);
             return jedis;
         } catch (Exception e) {
