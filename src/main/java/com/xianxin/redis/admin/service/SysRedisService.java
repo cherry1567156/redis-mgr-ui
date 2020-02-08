@@ -51,4 +51,5 @@ public interface SysRedisService {
 
     Response delete(String host);
 
+    Response selectDb(String host);
 }

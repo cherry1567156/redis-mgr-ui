@@ -17,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
 
@@ -556,6 +557,56 @@ public class SysRedisServiceImpl implements SysRedisService {
     public Response delete(String host) {
         SysConfig.deleteRedisConfig(host);
         return Response.success("删除成功");
+    }
+
+    @Override
+    public Response selectDb(String host) {
+        log.info("HOST： {}", host);
+
+        RedisConfig redisConfig = SysConfig.findRedisConfigByUsername(host);
+
+        // 创建redis连接
+        JedisShardInfo jedisShardInfo = new JedisShardInfo(host, redisConfig.getPort());
+        if (StringUtils.isNotBlank(redisConfig.getPassword())) {
+            jedisShardInfo.setPassword(redisConfig.getPassword());
+        } else {
+            jedisShardInfo.setPassword(null);
+        }
+        Jedis jedis = new Jedis(jedisShardInfo);
+
+        List<Map<String, String>> list = new ArrayList<>();
+        for (int i = 0; i < 16; i++) {
+            log.info("SELECT {}", i);
+
+            try {
+                // 检查db是否连接扫描成功
+                String selectDb = jedis.select(i);
+                log.info(selectDb);
+                Map<String, String> map = new HashMap<>(2);
+                map.put("name", "db" + i);
+                map.put("db", i + "");
+
+                list.add(map);
+            } catch (Exception e) {
+                log.info(e.getMessage());
+                if (e.getMessage().contains("NOAUTH Authentication required")) {
+                    return Response.error("需要密码认证");
+                }
+
+                if (e.getMessage().contains("ERR DB index is out of range")) {
+                    // 查询数据库下标越界时 跳出循环
+                    break;
+                }
+            }
+        }
+
+        if (list.size() > 0) {
+            return Response.success(list);
+        }
+        // 关闭连接
+        jedis.close();
+        // ERR DB index is out of range ：ERR数据库索引超出范围
+        return Response.error("ERR数据库索引超出范围");
     }
 
     private SysRedis baseInfo(String key, Jedis jedis) {

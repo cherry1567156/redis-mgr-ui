@@ -77,7 +77,11 @@ public class SysConfig {
     }
 
     public static RedisConfig findRedisConfigByUsername(String host) {
-        return redisInfo.get(host);
+        RedisConfig redisConfig = redisInfo.get(host);
+        if (redisConfig == null) {
+            throw new ServerException("[" + host + "]配置不存在");
+        }
+        return redisConfig;
     }
 
     public static Collection<RedisConfig> getRedisConfigValues() {
@@ -160,9 +164,9 @@ public class SysConfig {
     public static void testConnection(RedisConfig po) {
         try {
             JedisShardInfo shardInfo = new JedisShardInfo("redis://" + po.getHost() + ":" + po.getPort() + "/0");
-            if(StringUtils.isNotBlank(po.getPassword())){
+            if (StringUtils.isNotBlank(po.getPassword())) {
                 shardInfo.setPassword(po.getPassword());
-            }else {
+            } else {
                 shardInfo.setPassword(null);
             }
             Jedis jedis = new Jedis(shardInfo);
@@ -180,9 +184,9 @@ public class SysConfig {
 //            return Response.error("配置信息不存在");
 //            }
             JedisShardInfo shardInfo = new JedisShardInfo("redis://" + redisConfig.getHost() + ":" + redisConfig.getPort() + "/" + db);
-            if(StringUtils.isNotBlank(redisConfig.getPassword())){
+            if (StringUtils.isNotBlank(redisConfig.getPassword())) {
                 shardInfo.setPassword(redisConfig.getPassword());
-            }else {
+            } else {
                 shardInfo.setPassword(null);
             }
             Jedis jedis = new Jedis(shardInfo);
