@@ -1,19 +1,20 @@
 package com.xianxin.redis.admin.service.impl;
 
 import com.xianxin.redis.admin.bean.dto.SysRedisDto;
-import com.xianxin.redis.admin.bean.po.RedisConfig;
 import com.xianxin.redis.admin.bean.po.SysRedis;
 import com.xianxin.redis.admin.bean.vo.CacheRedisQueryVo;
 import com.xianxin.redis.admin.bean.vo.CacheRedisVo;
 import com.xianxin.redis.admin.bean.vo.SysRedisCreateVo;
 import com.xianxin.redis.admin.bean.vo.SysRedisUpdateVo;
 import com.xianxin.redis.admin.framework.common.Response;
-import com.xianxin.redis.admin.framework.config.SysConfig;
+import com.xianxin.redis.admin.framework.config.RedisConfig;
+import com.xianxin.redis.admin.framework.config.RedisUtil;
 import com.xianxin.redis.admin.framework.utils.DateUtils;
 import com.xianxin.redis.admin.service.SysRedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import redis.clients.jedis.Jedis;
@@ -32,30 +33,25 @@ import java.util.*;
 @Slf4j
 public class SysRedisServiceImpl implements SysRedisService {
 
+    @Autowired
+    private RedisConfig redisConfig;
+
+    @Autowired
+    private RedisUtil redisUtil;
+
     @Override
     public boolean saveOrUpdate(RedisConfig po, boolean conn) {
-        // 尝试连接redis
-//        if (conn) {
-//            SysConfig.testConnection(po);
-//        }
-        SysConfig.saveOrUpdateRedisConfig(po);
         return true;
     }
 
     @Override
-    public boolean enabledOrDisabled(String host, boolean status) {
-        RedisConfig redisConfig = SysConfig.findRedisConfigByUsername(host);
-        if (redisConfig != null) {
-            redisConfig.setStatus(status);
-
-            return saveOrUpdate(redisConfig, false);
-        }
-        return false;
+    public boolean enabledOrDisabled(String host, String status) {
+        return true;
     }
 
     @Override
     public Response enabled(String host) {
-        boolean isSuccess = enabledOrDisabled(host, true);
+        boolean isSuccess = enabledOrDisabled(host, "OK");
         if (isSuccess) {
             return Response.success("启用成功");
         }
@@ -64,7 +60,7 @@ public class SysRedisServiceImpl implements SysRedisService {
 
     @Override
     public Response disabled(String host) {
-        boolean isSuccess = enabledOrDisabled(host, false);
+        boolean isSuccess = enabledOrDisabled(host, "ERROR");
         if (isSuccess) {
             return Response.success("停用成功");
         }
@@ -101,10 +97,7 @@ public class SysRedisServiceImpl implements SysRedisService {
 
     public List<RedisConfig> listAll() {
         List<RedisConfig> list = new ArrayList<>();
-        for (RedisConfig redisConfig : SysConfig.getRedisConfigValues()) {
-            //cacheRedis.setPassword("******");
-            list.add(redisConfig);
-        }
+        list.add(redisConfig);
         return list;
     }
 
@@ -113,20 +106,16 @@ public class SysRedisServiceImpl implements SysRedisService {
         List<RedisConfig> list = listAll();
         List<Map<String, String>> selectList = new ArrayList<>();
         list.forEach(redisConfig -> {
-            if (redisConfig.getStatus()) {
-                Map<String, String> map = new HashMap<>();
-                map.put("host", redisConfig.getHost());
-                map.put("name", redisConfig.getName());
-                selectList.add(map);
-            }
+            Map<String, String> map = new HashMap<>();
+            map.put("host", redisConfig.getHostName());
+            map.put("name", redisConfig.getHostName());
+            selectList.add(map);
         });
-
         return Response.success(selectList);
     }
 
     @Override
     public Response<List<SysRedis>> cacheList(CacheRedisQueryVo vo) {
-        RedisConfig redisConfig = SysConfig.findRedisConfigByUsername(vo.getHost());
         if (redisConfig == null) {
             return Response.error("配置信息不存在");
         }
@@ -139,7 +128,7 @@ public class SysRedisServiceImpl implements SysRedisService {
             }
         }
 
-        Jedis jedis = SysConfig.getJedis(vo.getHost(), vo.getDb());
+        Jedis jedis = redisUtil.getJedis(vo.getHost(), vo.getDb());
         ScanParams scanParams = new ScanParams();
         int count = 10000;
         scanParams.count(count);
@@ -180,7 +169,7 @@ public class SysRedisServiceImpl implements SysRedisService {
         String type = vo.getType();
         String key = vo.getKeyword();
         Long elCount = 0L;
-        Jedis jedis = SysConfig.getJedis(vo.getHost(), vo.getDb());
+        Jedis jedis = redisUtil.getJedis(vo.getHost(), vo.getDb());
         Long expire = jedis.ttl(key);
         String expireStr = "";
         if (expire == -1) {
@@ -313,7 +302,7 @@ public class SysRedisServiceImpl implements SysRedisService {
 
     @Override
     public Response cacheCreate(CacheRedisVo vo) {
-        Jedis jedis = SysConfig.getJedis(vo.getHost(), vo.getDb());
+        Jedis jedis = redisUtil.getJedis(vo.getHost(), vo.getDb());
         String type = vo.getDataType();
         if ("string".equals(type)) {
             jedis.set(vo.getRedisKey(), vo.getRedisValue());
@@ -381,7 +370,7 @@ public class SysRedisServiceImpl implements SysRedisService {
     @Override
     public Response cacheDelete(CacheRedisVo vo) {
         String type = vo.getDataType();
-        Jedis jedis = SysConfig.getJedis(vo.getHost(), vo.getDb());
+        Jedis jedis = redisUtil.getJedis(vo.getHost(), vo.getDb());
         boolean exists = jedis.exists(vo.getRedisKey());
         if (exists) {
             long count = 0;
@@ -458,7 +447,7 @@ public class SysRedisServiceImpl implements SysRedisService {
     @Override
     public Response cacheNameUpdate(CacheRedisVo vo) {
         String type = vo.getDataType();
-        Jedis jedis = SysConfig.getJedis(vo.getHost(), vo.getDb());
+        Jedis jedis = redisUtil.getJedis(vo.getHost(), vo.getDb());
         boolean exists = jedis.exists(vo.getOldRedisKey());
         if (exists) {
 //            if ("string".equalsIgnoreCase(type)) {
@@ -476,7 +465,7 @@ public class SysRedisServiceImpl implements SysRedisService {
     @Override
     public Response cacheValueCreate(CacheRedisVo vo) {
 //        String type = vo.getDataType();
-        Jedis jedis = SysConfig.getJedis(vo.getHost(), vo.getDb());
+        Jedis jedis = redisUtil.getJedis(vo.getHost(), vo.getDb());
         boolean exists = jedis.exists(vo.getRedisKey());
         if (exists) {
             Long expire = jedis.ttl(vo.getRedisKey());
@@ -491,7 +480,7 @@ public class SysRedisServiceImpl implements SysRedisService {
     @Override
     public Response cacheValueUpdate(CacheRedisVo vo) {
         String type = vo.getDataType();
-        Jedis jedis = SysConfig.getJedis(vo.getHost(), vo.getDb());
+        Jedis jedis = redisUtil.getJedis(vo.getHost(), vo.getDb());
         boolean exists = jedis.exists(vo.getRedisKey());
         if (exists) {
             Long expire = jedis.ttl(vo.getRedisKey());
@@ -529,7 +518,7 @@ public class SysRedisServiceImpl implements SysRedisService {
      */
     @Override
     public Response cacheExpireUpdate(CacheRedisVo vo) {
-        Jedis jedis = SysConfig.getJedis(vo.getHost(), vo.getDb());
+        Jedis jedis = redisUtil.getJedis(vo.getHost(), vo.getDb());
         boolean exists = jedis.exists(vo.getRedisKey());
         if (exists) {
             if (vo.getExpire() == 0) {
@@ -555,15 +544,12 @@ public class SysRedisServiceImpl implements SysRedisService {
 
     @Override
     public Response delete(String host) {
-        SysConfig.deleteRedisConfig(host);
         return Response.success("删除成功");
     }
 
     @Override
     public Response selectDb(String host) {
         log.info("HOST： {}", host);
-
-        RedisConfig redisConfig = SysConfig.findRedisConfigByUsername(host);
 
         // 创建redis连接
         JedisShardInfo jedisShardInfo = new JedisShardInfo(host, redisConfig.getPort());

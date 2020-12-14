@@ -1,19 +1,20 @@
 package com.xianxin.redis.admin.controller;
 
 import com.xianxin.redis.admin.bean.dto.SysRedisDto;
-import com.xianxin.redis.admin.bean.po.RedisConfig;
 import com.xianxin.redis.admin.bean.po.SysRedis;
-import com.xianxin.redis.admin.bean.vo.CacheRedisVo;
 import com.xianxin.redis.admin.bean.vo.CacheRedisQueryVo;
+import com.xianxin.redis.admin.bean.vo.CacheRedisVo;
 import com.xianxin.redis.admin.bean.vo.SysRedisCreateVo;
 import com.xianxin.redis.admin.bean.vo.SysRedisUpdateVo;
 import com.xianxin.redis.admin.framework.annotation.LogAnnotation;
 import com.xianxin.redis.admin.framework.common.Response;
-import com.xianxin.redis.admin.framework.config.SysConfig;
+import com.xianxin.redis.admin.framework.config.RedisConfig;
+import com.xianxin.redis.admin.framework.config.RedisUtil;
 import com.xianxin.redis.admin.service.SysRedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,11 +30,18 @@ public class RedisController extends BaseController {
     @Autowired
     private SysRedisService sysRedisService;
 
+    @Autowired
+    private RedisConfig redisConfig;
+
+    @Autowired
+    private RedisUtil redisUtil;
+
     @LogAnnotation(module = "配置", business = "列表查询")
     @GetMapping(path = "/config/query")
     public Response<List<RedisConfig>> queryConfig() {
-
-        return sysRedisService.list();
+        List<RedisConfig> configs = new ArrayList<>();
+        configs.add(redisConfig);
+        return new Response().setData(configs);
     }
 
     @LogAnnotation(module = "缓存", business = "列表查询")
@@ -95,7 +103,6 @@ public class RedisController extends BaseController {
     @LogAnnotation(module = "缓存", business = "删除缓存")
     @GetMapping(path = "/config/select")
     public Response<List<Map<String, String>>> select() {
-
         return sysRedisService.select();
     }
 
@@ -137,9 +144,7 @@ public class RedisController extends BaseController {
     @LogAnnotation(module = "配置", business = "测试连接")
     @PostMapping(path = "/config/test/conn")
     public Response connection(@RequestBody RedisConfig config) {
-
-        SysConfig.testConnection(config);
-
+        redisUtil.testConnection(config);
         return Response.success("redis-server连接成功");
     }
 

@@ -155,7 +155,8 @@ public class Response<T> implements Serializable {
         return data;
     }
 
-    public void setData(T data) {
+    public Response setData(T data) {
         this.data = data;
+        return this;
     }
 }

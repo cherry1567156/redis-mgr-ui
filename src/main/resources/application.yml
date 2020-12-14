@@ -17,3 +17,12 @@ logging:
   file:
     path: /Users/xianxin/Desktop/projects/redis-admin/logs/
     name: redis-admin.log
+
+spring:
+  redis:
+    name: 测试
+    hostName: 119.96.233.75
+    port: 6399
+    password: icbms2018
+    env: dev
+

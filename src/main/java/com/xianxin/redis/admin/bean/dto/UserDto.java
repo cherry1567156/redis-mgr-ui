@@ -1,16 +1,14 @@
-package com.xianxin.redis.admin.bean.po;
+package com.xianxin.redis.admin.bean.dto;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
- * @author 贤心i
- * @email 1138645967@qq.com
- * @date 2020/01/29
+ * @Author: Cherry
+ * @Date: 2020/12/14
+ * @Desc: UserDto
  */
 @Data
-public class SysUser implements Serializable {
+public class UserDto {
 
     private String username;
 

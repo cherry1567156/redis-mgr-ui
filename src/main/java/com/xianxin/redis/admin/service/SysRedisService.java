@@ -1,13 +1,13 @@
 package com.xianxin.redis.admin.service;
 
 import com.xianxin.redis.admin.bean.dto.SysRedisDto;
-import com.xianxin.redis.admin.bean.po.RedisConfig;
 import com.xianxin.redis.admin.bean.po.SysRedis;
 import com.xianxin.redis.admin.bean.vo.CacheRedisQueryVo;
 import com.xianxin.redis.admin.bean.vo.CacheRedisVo;
 import com.xianxin.redis.admin.bean.vo.SysRedisCreateVo;
 import com.xianxin.redis.admin.bean.vo.SysRedisUpdateVo;
 import com.xianxin.redis.admin.framework.common.Response;
+import com.xianxin.redis.admin.framework.config.RedisConfig;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +19,7 @@ public interface SysRedisService {
 
     boolean saveOrUpdate(RedisConfig po, boolean conn);
 
-    boolean enabledOrDisabled(String host, boolean status);
+    boolean enabledOrDisabled(String host, String status);
 
     Response enabled(String host);
 
